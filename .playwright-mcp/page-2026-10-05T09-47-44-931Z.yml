@@ -1,0 +1,14 @@
+- main [ref=e2]:
+  - paragraph [ref=e3]: GitHub Contribution Battle Arena
+  - heading "Mona Mayhem" [level=1] [ref=e4]
+  - paragraph [ref=e5]: Pick two developers. Fire up the battle. See who dominated the contributions last year.
+  - generic [ref=e6]:
+    - generic [ref=e7]:
+      - generic [ref=e8]: Player 1
+      - textbox "Player 1" [ref=e9]:
+        - /placeholder: octocat
+    - generic [ref=e10]:
+      - generic [ref=e11]: Player 2
+      - textbox "Player 2" [ref=e12]:
+        - /placeholder: torvalds
+    - button "Battle!" [ref=e13] [cursor=pointer]

@@ -1,0 +1,724 @@
+---
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+			rel="stylesheet"
+		/>
+		<title>Mona Mayhem</title>
+		<style>
+	:root {
+		--bg: #0a0a1a;
+		--panel: #111126;
+		--panel-alt: #191932;
+		--text: #e6edf3;
+		--muted: #aaa9c0;
+		--primary: #8a2be2;
+		--secondary: #5fed83;
+		--danger: #f87171;
+		--success: #5fed83;
+		--grid-bg: #0a0a1a;
+		--shadow: rgba(138, 43, 226, 0.4);
+		--arcade-font: 'Press Start 2P', 'Courier New', monospace;
+	}
+
+			* {
+				box-sizing: border-box;
+			}
+
+			body {
+				position: relative;
+				margin: 0;
+				min-height: 100vh;
+				font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+				background:
+					radial-gradient(ellipse at 50% 0%, rgba(138, 43, 226, 0.2), transparent 42%),
+					radial-gradient(ellipse at 90% 42%, rgba(95, 237, 131, 0.06), transparent 34%),
+					linear-gradient(180deg, #080817 0%, var(--bg) 72%);
+				color: var(--text);
+			}
+
+			body::before {
+				position: fixed;
+				z-index: 5;
+				inset: 0;
+				pointer-events: none;
+				content: '';
+				background: repeating-linear-gradient(
+					to bottom,
+					transparent 0,
+					transparent 3px,
+					rgba(5, 5, 15, 0.14) 4px
+				);
+				opacity: 0.12;
+			}
+
+			button,
+			input {
+				font: inherit;
+			}
+
+			.battle-shell {
+				max-width: 1200px;
+				margin: 0 auto;
+				padding: 48px 20px 64px;
+			}
+
+			.eyebrow {
+				margin: 0 0 12px;
+				color: var(--secondary);
+				font-family: var(--arcade-font);
+				text-transform: uppercase;
+				letter-spacing: 0.04em;
+				font-size: 0.58rem;
+				font-weight: 700;
+				line-height: 1.8;
+			}
+
+			h1 {
+				margin: 0;
+				font-family: var(--arcade-font);
+				font-size: clamp(1.45rem, 5vw, 3rem);
+				line-height: 1.5;
+				letter-spacing: 0;
+				color: #f3eaff;
+				text-shadow: 0 0 8px rgba(138, 43, 226, 0.78), 0 0 22px rgba(95, 237, 131, 0.38);
+				animation: neon-pulse 3s ease-in-out infinite;
+			}
+
+			.subtitle {
+				margin: 16px 0 28px;
+				max-width: 620px;
+				color: var(--muted);
+				font-size: 1.05rem;
+			}
+
+			.battle-form {
+				display: grid;
+				grid-template-columns: repeat(3, minmax(0, 1fr));
+				gap: 16px;
+				padding: 22px;
+				margin-bottom: 18px;
+				background: rgba(17, 17, 38, 0.88);
+				border: 1px solid rgba(138, 43, 226, 0.24);
+				border-radius: 18px;
+				box-shadow: 0 16px 40px rgba(2, 2, 16, 0.58), 0 0 24px rgba(138, 43, 226, 0.08);
+			}
+
+			.field {
+				display: flex;
+				flex-direction: column;
+				gap: 8px;
+				animation: field-float-in 650ms cubic-bezier(0.2, 0.7, 0.25, 1) both;
+			}
+
+			.field:nth-child(2) {
+				animation-delay: 140ms;
+			}
+
+			label {
+				font-family: var(--arcade-font);
+				font-weight: 700;
+				letter-spacing: 0;
+				text-transform: uppercase;
+				color: var(--muted);
+				font-size: 0.58rem;
+				line-height: 1.8;
+			}
+
+			input {
+				padding: 14px 16px;
+				border: 1px solid rgba(138, 43, 226, 0.38);
+				border-radius: 12px;
+				background: rgba(8, 8, 24, 0.94);
+				color: var(--text);
+				transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+			}
+
+			input:focus {
+				outline: 2px solid var(--secondary);
+				outline-offset: 2px;
+				border-color: var(--secondary);
+				box-shadow: 0 0 0 4px rgba(95, 237, 131, 0.14), 0 0 16px rgba(95, 237, 131, 0.16);
+			}
+
+			.battle-button {
+				align-self: end;
+				padding: 14px 18px;
+				border: 0;
+				border-radius: 12px;
+				background: linear-gradient(135deg, #6f1cc2, var(--primary) 52%, #3bbf68);
+				color: #f8f5ff;
+				font-family: var(--arcade-font);
+				font-size: 0.62rem;
+				font-weight: 800;
+				letter-spacing: 0;
+				line-height: 1.8;
+				text-transform: uppercase;
+				cursor: pointer;
+				box-shadow: 0 10px 30px var(--shadow), 0 0 16px rgba(95, 237, 131, 0.14);
+				transition: transform 0.15s ease, filter 0.15s ease;
+			}
+
+			.battle-button:hover:not(:disabled) {
+				transform: translateY(-1px);
+				filter: brightness(1.08);
+			}
+
+			.battle-button:disabled {
+				opacity: 0.7;
+				cursor: wait;
+			}
+
+			.error-message {
+				display: none;
+				margin: 0 0 18px;
+				padding: 12px 16px;
+				border-left: 4px solid var(--danger);
+				border-radius: 10px;
+				background: rgba(248, 113, 113, 0.1);
+				color: #fecaca;
+			}
+
+			.error-message.visible {
+				display: block;
+			}
+
+			.loading-state {
+				display: none;
+				margin-bottom: 18px;
+				padding: 12px 16px;
+				border-radius: 12px;
+				background: rgba(138, 43, 226, 0.08);
+				border: 1px solid rgba(138, 43, 226, 0.35);
+				color: var(--secondary);
+				font-weight: 600;
+			}
+
+			.loading-state.visible {
+				display: block;
+				animation: loading-shift 2.4s ease-in-out infinite;
+			}
+
+			.battle-results {
+				display: none;
+				min-width: 0;
+				gap: 16px;
+				grid-template-columns: minmax(0, 1fr) 72px minmax(0, 1fr);
+				align-items: stretch;
+				margin-top: 18px;
+			}
+
+			.battle-results.visible {
+				display: grid;
+			}
+
+			.battle-outcome {
+				grid-column: 1 / -1;
+				padding: 14px 18px;
+				border: 1px solid rgba(255, 255, 255, 0.12);
+				border-radius: 12px;
+				background: rgba(25, 25, 50, 0.88);
+				text-align: center;
+				font-size: 1.1rem;
+				font-weight: 800;
+			}
+
+			.battle-outcome.winner {
+				color: var(--success);
+				border-color: rgba(95, 237, 131, 0.4);
+			}
+
+			.battle-outcome.tie {
+				color: #c9a4ff;
+				border-color: rgba(138, 43, 226, 0.5);
+			}
+
+			.player-card {
+				position: relative;
+				min-width: 0;
+				padding: 18px;
+				background: rgba(17, 17, 38, 0.9);
+				border: 1px solid rgba(138, 43, 226, 0.2);
+				border-radius: 18px;
+				box-shadow: 0 12px 25px rgba(3, 3, 18, 0.42);
+			}
+
+			.battle-results.visible .player-card::after {
+				position: absolute;
+				z-index: 1;
+				inset: 0;
+				pointer-events: none;
+				content: '';
+				border-radius: inherit;
+				background: linear-gradient(
+					110deg,
+					transparent 35%,
+					rgba(255, 255, 255, 0.055) 49%,
+					rgba(95, 237, 131, 0.08) 52%,
+					transparent 66%
+				);
+				transform: translateX(-110%);
+				animation: card-shimmer 1.2s ease-out 850ms 1 both;
+			}
+
+			.battle-results.visible #player-two-panel::after {
+				animation-delay: 1.05s;
+			}
+
+			.player-header {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				gap: 12px;
+				margin-bottom: 10px;
+			}
+
+			.player-header h2 {
+				margin: 0;
+				font-size: 1.2rem;
+			}
+
+			.player-meta {
+				font-family: var(--arcade-font);
+				color: var(--muted);
+				text-transform: uppercase;
+				letter-spacing: 0;
+				font-size: 0.48rem;
+				line-height: 1.8;
+			}
+
+			.total-count {
+				margin: 12px 0 8px;
+				font-size: 1.6rem;
+				font-weight: 800;
+			}
+
+			.date-range {
+				margin: 0;
+				font-size: 0.8rem;
+				color: var(--muted);
+			}
+
+			.contribution-grid {
+				display: grid;
+				min-width: 0;
+				grid-template-rows: repeat(7, 12px);
+				grid-auto-columns: 12px;
+				grid-auto-flow: column;
+				gap: 3px;
+				overflow-x: auto;
+				padding-top: 8px;
+			}
+
+			:global(.contribution-square) {
+				display: block;
+				width: 12px;
+				height: 12px;
+				border-radius: 3px;
+				background: #ebedf0;
+				box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+				transition: transform 140ms ease, box-shadow 140ms ease;
+			}
+
+			:global(.contribution-square:hover) {
+				position: relative;
+				z-index: 1;
+				transform: scale(1.45);
+				box-shadow: 0 0 8px var(--secondary), 0 0 14px rgba(138, 43, 226, 0.6);
+			}
+
+			.versus-pill {
+				background: linear-gradient(135deg, rgba(138, 43, 226, 0.92), rgba(95, 237, 131, 0.88), #6f1cc2);
+				background-size: 240% 240%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-family: var(--arcade-font);
+				font-size: 0.72rem;
+				font-weight: 400;
+				letter-spacing: 0;
+				text-transform: uppercase;
+				padding: 12px 14px;
+				margin: auto;
+				border-radius: 999px;
+				border: 1px solid rgba(255, 255, 255, 0.38);
+				color: #fff;
+				min-width: 72px;
+				height: 72px;
+				box-shadow: 0 0 18px rgba(138, 43, 226, 0.52), 0 0 34px rgba(95, 237, 131, 0.28);
+				animation: versus-shift 3.4s ease-in-out infinite;
+			}
+
+			@keyframes neon-pulse {
+				0%,
+				100% {
+					text-shadow: 0 0 7px rgba(138, 43, 226, 0.7), 0 0 18px rgba(95, 237, 131, 0.26);
+				}
+				50% {
+					text-shadow: 0 0 10px rgba(138, 43, 226, 0.95), 0 0 30px rgba(95, 237, 131, 0.58);
+				}
+			}
+
+			@keyframes versus-shift {
+				0%,
+				100% {
+					background-position: 0% 50%;
+					transform: scale(1);
+					box-shadow: 0 0 20px rgba(138, 43, 226, 0.62), 0 0 34px rgba(95, 237, 131, 0.3);
+				}
+				50% {
+					background-position: 100% 50%;
+					transform: scale(1.08);
+					box-shadow: 0 0 30px rgba(138, 43, 226, 0.82), 0 0 48px rgba(95, 237, 131, 0.48);
+				}
+			}
+
+			@keyframes field-float-in {
+				from {
+					opacity: 0;
+					transform: translateY(12px);
+				}
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+
+			@keyframes loading-shift {
+				0%,
+				100% {
+					color: var(--secondary);
+					text-shadow: 0 0 7px rgba(95, 237, 131, 0.3);
+				}
+				50% {
+					color: #c9a4ff;
+					text-shadow: 0 0 9px rgba(138, 43, 226, 0.55);
+				}
+			}
+
+			@keyframes card-shimmer {
+				to {
+					transform: translateX(110%);
+				}
+			}
+
+			@media (max-width: 850px) {
+				.battle-form {
+					grid-template-columns: 1fr;
+				}
+
+				.battle-button {
+					width: 100%;
+				}
+
+				.battle-results {
+					grid-template-columns: minmax(0, 1fr);
+					overflow-x: clip;
+				}
+
+				.versus-pill {
+					margin: 0 auto 6px;
+				}
+			}
+
+			@media (prefers-reduced-motion: reduce) {
+				*,
+				*::before,
+				*::after {
+					scroll-behavior: auto !important;
+					animation: none !important;
+					transition: none !important;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<main class="battle-shell">
+			<p class="eyebrow">GitHub Contribution Battle Arena</p>
+			<h1>Mona Mayhem</h1>
+			<p class="subtitle">Pick two developers. Fire up the battle. See who dominated the contributions last year.</p>
+
+			<form id="battle-form" class="battle-form" novalidate>
+				<div class="field">
+					<label for="player-one">Player 1</label>
+					<input id="player-one" name="playerOne" type="text" placeholder="octocat" autocomplete="off" />
+				</div>
+				<div class="field">
+					<label for="player-two">Player 2</label>
+					<input id="player-two" name="playerTwo" type="text" placeholder="torvalds" autocomplete="off" />
+				</div>
+				<button type="submit" class="battle-button" id="battle-button">Battle!</button>
+			</form>
+
+			<p id="error-message" class="error-message" aria-live="polite"></p>
+			<div id="loading-state" class="loading-state" aria-live="polite">Loading battle data...</div>
+
+			<section id="battle-results" class="battle-results" aria-live="polite">
+				<p id="battle-outcome" class="battle-outcome" role="status"></p>
+
+				<article class="player-card" id="player-one-panel">
+					<div class="player-header">
+						<h2 id="player-one-name">Player One</h2>
+						<span class="player-meta">Player 1</span>
+					</div>
+					<div class="total-count" id="player-one-total">0</div>
+					<p class="date-range" id="player-one-range">--</p>
+					<div id="player-one-grid" class="contribution-grid"></div>
+				</article>
+
+				<div class="versus-pill" aria-label="Versus">VS</div>
+
+				<article class="player-card" id="player-two-panel">
+					<div class="player-header">
+						<h2 id="player-two-name">Player Two</h2>
+						<span class="player-meta">Player 2</span>
+					</div>
+					<div class="total-count" id="player-two-total">0</div>
+					<p class="date-range" id="player-two-range">--</p>
+					<div id="player-two-grid" class="contribution-grid"></div>
+				</article>
+			</section>
+		</main>
+
+		<script>
+			const DEFAULT_COLORS = ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'];
+			const form = document.getElementById('battle-form');
+			const playerOneInput = document.getElementById('player-one');
+			const playerTwoInput = document.getElementById('player-two');
+			const errorMessage = document.getElementById('error-message');
+			const loadingState = document.getElementById('loading-state');
+			const battleResults = document.getElementById('battle-results');
+			const battleButton = document.getElementById('battle-button');
+
+			const playerOneName = document.getElementById('player-one-name');
+			const playerTwoName = document.getElementById('player-two-name');
+			const playerOneTotal = document.getElementById('player-one-total');
+			const playerTwoTotal = document.getElementById('player-two-total');
+			const playerOneRange = document.getElementById('player-one-range');
+			const playerTwoRange = document.getElementById('player-two-range');
+			const playerOneGrid = document.getElementById('player-one-grid');
+			const playerTwoGrid = document.getElementById('player-two-grid');
+			const battleOutcome = document.getElementById('battle-outcome');
+
+			function showError(message) {
+				errorMessage.textContent = message;
+				errorMessage.classList.add('visible');
+			}
+
+			function clearError() {
+				errorMessage.textContent = '';
+				errorMessage.classList.remove('visible');
+			}
+
+			function setLoading(isLoading) {
+				battleButton.disabled = isLoading;
+				loadingState.classList.toggle('visible', isLoading);
+			}
+
+			function parseDateValue(value) {
+				if (!value) return null;
+				const match = /^([0-9]{4})-([0-9]{2})-([0-9]{2})$/.exec(value);
+				if (match) {
+					const [, year, month, day] = match;
+					return new Date(Number(year), Number(month) - 1, Number(day));
+				}
+				return new Date(value);
+			}
+
+			function formatRange(from, to) {
+				if (!from && !to) return 'No date range available';
+				const formatDate = (value) => {
+					if (!value) return 'Unknown';
+					return parseDateValue(value).toLocaleDateString(undefined, {
+						month: 'short',
+						day: 'numeric',
+						year: 'numeric',
+					});
+				};
+				return `${formatDate(from)} → ${formatDate(to)}`;
+			}
+
+			function getPalette(data) {
+				return data.colors_full?.length ? data.colors_full : data.colors?.length ? data.colors : DEFAULT_COLORS;
+			}
+
+			function isRecord(value) {
+				return typeof value === 'object' && value !== null && !Array.isArray(value);
+			}
+
+			function isContributionDay(value) {
+				return (
+					isRecord(value) &&
+					typeof value.weekday === 'number' &&
+					Number.isInteger(value.weekday) &&
+					value.weekday >= 0 &&
+					value.weekday <= 6 &&
+					typeof value.count === 'number' &&
+					Number.isFinite(value.count) &&
+					value.count >= 0 &&
+					typeof value.level === 'number' &&
+					Number.isInteger(value.level) &&
+					value.level >= 0 &&
+					(value.date === undefined || typeof value.date === 'string')
+				);
+			}
+
+			function isContributionData(value) {
+				return (
+					isRecord(value) &&
+					typeof value.username === 'string' &&
+					Array.isArray(value.weeks) &&
+					value.weeks.every(
+						(week) =>
+							isRecord(week) &&
+							Array.isArray(week.contribution_days) &&
+							week.contribution_days.every(isContributionDay),
+					) &&
+					(value.total_contributions === undefined ||
+						(typeof value.total_contributions === 'number' && Number.isFinite(value.total_contributions))) &&
+					(value.totalContributions === undefined ||
+						(typeof value.totalContributions === 'number' && Number.isFinite(value.totalContributions))) &&
+					(value.from === undefined || value.from === null || typeof value.from === 'string') &&
+					(value.to === undefined || value.to === null || typeof value.to === 'string') &&
+					(value.colors_full === undefined ||
+						(Array.isArray(value.colors_full) && value.colors_full.every((color) => typeof color === 'string'))) &&
+					(value.colors === undefined ||
+						(Array.isArray(value.colors) && value.colors.every((color) => typeof color === 'string')))
+				);
+			}
+
+			function renderGrid(container, data) {
+				container.innerHTML = '';
+				const palette = getPalette(data);
+				for (const [weekIndex, week] of data.weeks.entries()) {
+					for (const day of week.contribution_days) {
+						const square = document.createElement('span');
+						square.className = 'contribution-square';
+						square.title = `${day.date ?? 'Unknown'}: ${day.count} contributions`;
+						square.style.backgroundColor =
+							palette[Math.min(day.level, palette.length - 1)] ?? palette[0];
+						square.style.gridColumn = String(weekIndex + 1);
+						square.style.gridRow = String(day.weekday + 1);
+						container.appendChild(square);
+					}
+				}
+			}
+
+			async function fetchContributionData(username) {
+				const trimmed = username.trim();
+				if (!trimmed) {
+					throw new Error('Both usernames are required.');
+				}
+
+				const response = await fetch(`/api/contributions/${encodeURIComponent(trimmed)}`);
+				let data;
+
+				try {
+					data = await response.json();
+				} catch {
+					throw new Error('The contribution service returned invalid JSON.');
+				}
+
+				if (!response.ok) {
+					const message =
+						isRecord(data) && typeof data.error === 'string'
+							? data.error
+							: `Unable to fetch contribution data (HTTP ${response.status}).`;
+					throw new Error(message);
+				}
+
+				if (!isContributionData(data)) {
+					throw new Error('The contribution service returned invalid data.');
+				}
+
+				return data;
+			}
+
+			function renderBattle(dataOne, dataTwo) {
+				const totalOne =
+					dataOne.totalContributions ??
+					dataOne.total_contributions ??
+					dataOne.weeks.reduce(
+						(total, week) => total + week.contribution_days.reduce((weekTotal, day) => weekTotal + day.count, 0),
+						0,
+					);
+				const totalTwo =
+					dataTwo.totalContributions ??
+					dataTwo.total_contributions ??
+					dataTwo.weeks.reduce(
+						(total, week) => total + week.contribution_days.reduce((weekTotal, day) => weekTotal + day.count, 0),
+						0,
+					);
+
+				playerOneName.textContent = `@${dataOne.username}`;
+				playerTwoName.textContent = `@${dataTwo.username}`;
+				playerOneTotal.textContent = totalOne.toLocaleString();
+				playerTwoTotal.textContent = totalTwo.toLocaleString();
+				playerOneRange.textContent = formatRange(dataOne.from, dataOne.to);
+				playerTwoRange.textContent = formatRange(dataTwo.from, dataTwo.to);
+
+				if (totalOne === totalTwo) {
+					battleOutcome.textContent = "It's a tie!";
+					battleOutcome.className = 'battle-outcome tie';
+				} else {
+					const winner = totalOne > totalTwo ? dataOne.username : dataTwo.username;
+					battleOutcome.textContent = `@${winner} wins!`;
+					battleOutcome.className = 'battle-outcome winner';
+				}
+
+				renderGrid(playerOneGrid, dataOne);
+				renderGrid(playerTwoGrid, dataTwo);
+				battleResults.classList.add('visible');
+			}
+
+			form.addEventListener('submit', async (event) => {
+				event.preventDefault();
+				if (battleButton.disabled) return;
+
+				clearError();
+				battleResults.classList.remove('visible');
+
+				const playerOne = playerOneInput.value.trim();
+				const playerTwo = playerTwoInput.value.trim();
+
+				if (!playerOne || !playerTwo) {
+					showError('Please enter both usernames before starting the battle.');
+					return;
+				}
+
+				setLoading(true);
+
+				try {
+					const [dataOne, dataTwo] = await Promise.all([
+						fetchContributionData(playerOne),
+						fetchContributionData(playerTwo),
+					]);
+
+					renderBattle(dataOne, dataTwo);
+				} catch (error) {
+					showError(error instanceof Error ? error.message : 'Battle failed.');
+				} finally {
+					setLoading(false);
+				}
+			});
+
+			[playerOneInput, playerTwoInput].forEach((input) => {
+				input.addEventListener('keydown', (event) => {
+					if (event.key === 'Enter') {
+						event.preventDefault();
+						form.requestSubmit();
+					}
+				});
+			});
+		</script>
+	</body>
+</html>

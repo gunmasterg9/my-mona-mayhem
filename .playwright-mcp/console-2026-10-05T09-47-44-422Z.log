@@ -1,0 +1,3 @@
+[     337ms] Unexpected identifier 'ContributionDay'
+[   18391ms] Unexpected identifier 'ContributionDay'
+[   32542ms] [LOG] %cAstro background: linear-gradient(66.77deg, #D83333 0%, #F041FF 100%); color: white; padding-inline: 4px; border-radius: 2px; font-family: monospace; Verbose logging enabled @ http://localhost:4321/node_modules/.vite/deps/chunk-LEX3GG7N.js?v=dac4d438:22
